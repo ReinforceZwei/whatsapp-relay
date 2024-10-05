@@ -16,4 +16,5 @@ RUN apt-get update && apt-get install curl gnupg -y \
 WORKDIR /app
 COPY . .
 
+RUN npm install
 CMD ['node', 'main.js']
