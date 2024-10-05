@@ -17,4 +17,4 @@ WORKDIR /app
 COPY . .
 
 RUN npm install
-CMD ['node', 'main.js']
+CMD ['/usr/bin/node', 'main.js']
