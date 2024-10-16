@@ -38,19 +38,19 @@ client.on('qr', qr => {
 
 client.on('message', message => {
     const chatName = 'global' // for now just go for single cooldown
-	if (lastSent[chatName]) {
-        // Use .negate() to turn negative seconds to positive
-        const lastSentSecond = lastSent[chatName].diffNow().negate().as('seconds')
-        if (lastSentSecond <= COOLDOWN) {
-            return
-        }
-    }
 
     // wait 5 seconds then check chat unread count
     // if no unread message, dont send webhook
     setTimeout(() => {
         message.getChat().then((chat) => {
             if (chat.unreadCount > 0) {
+                if (lastSent[chatName]) {
+                    // Use .negate() to turn negative seconds to positive
+                    const lastSentSecond = lastSent[chatName].diffNow().negate().as('seconds')
+                    if (lastSentSecond <= COOLDOWN) {
+                        return
+                    }
+                }
                 fetch(DISCORD_WEBHOOK, {
                     method: 'post',
                     headers: {
